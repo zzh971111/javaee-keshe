@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    
+    <bean id="baseDAO" class="org.keshe.infosys.dao.BaseDAO">
+    	<property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <!-- stulogin -->
+    <bean id="stuloginDAO" class="org.keshe.infosys.dao.impl.stuloginDAO" parent="baseDAO">
+    </bean>
+    <bean id="stulogin" class="org.keshe.infosys.action.stuLoginAction">
+     <property name="stuinfoService" ref="stuinfoService"></property>
+     <property name="choiceService" ref="choiceService"></property> 
+      <property name="topService" ref="topService"></property>
+      <property name="scoreService" ref="scoreService"></property>
+      <property name="stuloginService" ref="stuloginService"></property>
+    </bean>
+    
+    <bean id="stuloginService" class="org.keshe.infosys.service.impl.StuLoginService">
+    <property name="stuloginDAO" ref="stuloginDAO"></property>
+    </bean>
+    
+    
+    
+   
+    
+    
+    <!--register -->
+    <bean id="registerDAO" class="org.keshe.infosys.dao.impl.registerDAO" parent="baseDAO">
+    </bean>
+    <bean id="register" class="org.keshe.infosys.action.registerAction">
+    <property name="registerDAO" ref="registerDAO"></property>
+    <property name="registerService" ref="registerService"></property>
+    </bean>
+    <bean id="registerService" class="org.keshe.infosys.service.impl.RegisterService">
+    <property name="registerDAO" ref="registerDAO"></property>
+    </bean>
+    
+     <!-- stuinfo -->
+    <bean id="stuinfoDAO" class="org.keshe.infosys.dao.impl.StuinfoDAO" parent="baseDAO">
+    </bean>
+    <bean id="stuinfoServiceProxy" class="org.keshe.infosys.service.impl.StuinfoService">
+    <property name="stuinfoDAO" ref="stuinfoDAO"></property>
+    </bean>
+    <bean id="stuinfoAction" class="org.keshe.infosys.action.StuinfoAction">
+    <property name="stuinfoService" ref="stuinfoService"></property>
+    </bean>
+    <!-- 前置日志通知 -->
+    <bean id="logBeforeAdvice" class="org.keshe.infosys.service.impl.LogBeforeAdvice"/>
+    <bean id="stuinfoService" class="org.springframework.aop.framework.ProxyFactoryBean">
+    	<property name="proxyInterfaces">
+    		<value>org.keshe.infosys.service.IStuinfoService</value>
+    	</property>
+    	<property name="target" ref="stuinfoServiceProxy"/>
+    	<property name="interceptorNames">
+    		<list>
+    			<value>logBeforeAdvice</value>
+    		</list>
+    	</property>
+    
+    </bean>
+    
+    <!-- topicinfo -->
+    <bean id="topDAO" class="org.keshe.infosys.dao.impl.TopDAO" parent="baseDAO">
+    </bean>
+    <bean id="topService" class="org.keshe.infosys.service.impl.TOPService">
+    <property name="topDAO" ref="topDAO"></property>
+    </bean>
+    <bean id="topAction" class="org.keshe.infosys.action.TopAction">
+    <property name="topService" ref="topService"></property>
+    </bean>
+    
+    <!-- score -->
+    <bean id="scoreDAO" class="org.keshe.infosys.dao.impl.ScoreDAO" parent="baseDAO">
+    </bean>
+    <bean id="scoreService" class="org.keshe.infosys.service.impl.ScoreService">
+    <property name="scoreDAO" ref="scoreDAO"></property>
+    </bean>
+    <bean id="scoreAction" class="org.keshe.infosys.action.ScoreAction">
+    <property name="scoreService" ref="scoreService"></property>
+    </bean>
+    
+    <!-- teachinfo and teachlogin-->
+     <bean id="teachDAO" class="org.keshe.infosys.dao.impl.TeachDAO" parent="baseDAO">
+    </bean>
+    <bean id="teachService" class="org.keshe.infosys.service.impl.TeachService">
+    <property name="teachDAO" ref="teachDAO"></property>
+    </bean>
+     <bean id="teachAction" class="org.keshe.infosys.action.teachLoginAction">
+    <property name="teachService" ref="teachService"></property>
+    <property name="teachloginService" ref="teachloginService"></property>
+    </bean>
+    <bean id="teachloginDAO" class="org.keshe.infosys.dao.impl.teachloginDAO" parent="baseDAO">
+    </bean>
+    <bean id="teachloginService" class="org.keshe.infosys.service.impl.TeachloginService" >
+    <property name="teachloginDAO" ref="teachloginDAO"></property>
+    </bean>
+    
+    
+    
+    <!-- choice -->
+     <bean id="choiceDAO" class="org.keshe.infosys.dao.impl.ChoiceDAO" parent="baseDAO">
+    </bean>
+    <bean id="choiceService" class="org.keshe.infosys.service.impl.ChoiceService">
+    <property name="choiceDAO" ref="choiceDAO"></property>
+    </bean>
+    <bean id="choiceAction" class="org.keshe.infosys.action.ChoiceAction">
+    <property name="choiceService" ref="choiceService"></property>
+    </bean>
+    <!-- 上传下载 -->
+    <bean id="uploadDAO" class="org.keshe.infosys.dao.impl.uploadDAO" parent="baseDAO">
+    </bean>
+    <bean id="uploadService" class="org.keshe.infosys.service.impl.UploadService">
+    <property name="uploadDAO" ref="uploadDAO"></property>
+    </bean>
+    <bean id="uploadAction" class="org.keshe.infosys.action.uploadAction">
+    <property name="uploadService" ref="uploadService"></property>
+    </bean>
+    
+    <bean id="downloadAction" class="org.keshe.infosys.action.DownAction">
+    </bean>
+    
+    
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url" value="jdbc:mysql://localhost:3306/keshe?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="123456"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>org/keshe/infosys/vo/Group.hbm.xml</value>
+				<value>org/keshe/infosys/vo/Score.hbm.xml</value>
+				<value>org/keshe/infosys/vo/Stuinfo.hbm.xml</value>
+				<value>org/keshe/infosys/vo/Teachinfo.hbm.xml</value>
+				<value>org/keshe/infosys/vo/Topicinfo.hbm.xml</value>
+				<value>org/keshe/infosys/vo/Upload.hbm.xml</value></list>
+		</property></bean></beans>

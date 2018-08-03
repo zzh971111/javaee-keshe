@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+<!--国际化配置  -->
+    <constant name="struts.custom.i18n.resources" value="local.message" />
+    <constant name="struts.i18n.encoding" value="utf-8" />
+	<package name="struts" extends="struts-default" >
+	
+	<!-- stuloginAction -->
+		<action name="stulogin" class="stulogin">
+		 <result name="success">/stuindex.jsp</result>
+		 <result name="error">/error.jsp</result>
+		</action>
+		<action name="getStuinfo" class="stulogin"  method="getstuinfo">
+		 <result name="success">/studentframe/updateS.jsp</result>
+		</action>
+		<action name="updateSTuinfo" class="stulogin" method="updateStuinfo">
+		 <result name="success">/studentframe/getStu.jsp</result>
+		</action>
+		<action name="getChoice1" class="stulogin"  method="getChoice1">
+		 <result name="success">/studentframe/getStuChoice.jsp</result>
+		</action>
+		<action name="selectTop" class="stulogin"  method="selectTop">
+		<result name="success">/studentframe/getStuChoice.jsp</result>
+		</action>
+		<action name="browseTOpPaging" class="stulogin"  method="browseTOpPaging">
+		<result name="success">/teacherframe/topic.jsp</result>
+		</action>
+		<action name="browseTopPaging1" class="stulogin"  method="browseTopPaging">
+		<result name="success">/studentframe/topic1.jsp</result>
+		</action>
+		<action name="getScoer" class="stulogin"  method="getScoer">
+		<result name="success">/studentframe/sco1.jsp</result>
+		</action>
+		
+		<!-- teachAction -->
+		<action name="teachlogin" class="teachAction">
+		 <result name="success">/teaindex.jsp</result>
+		 <result name="error">/error.jsp</result>
+		</action>
+		
+		<!-- resgister -->
+		<action name="register" class="register" method="register">
+		 <result name="success">/stulogin.jsp</result>
+		 <result name="error">/error.jsp</result>
+		</action>
+		
+		<!-- stuinfoAction -->
+		<action name="browseStuinfoPaging" class="stuinfoAction"  method="browseStuinfoPaging">
+		 <result name="success">/teacherframe/stu.jsp</result>
+		</action> 
+		<action name="updateStuinfo" class="stuinfoAction"  method="updateStuinfo">
+		 <result name="success">/teacherframe/stuinfo.jsp</result>
+		</action>
+		<action name="deleteStuinfo" class="stuinfoAction"  method="deleteStuinfo">
+		 <result name="success">/teacherframe/stuinfo.jsp</result>
+		</action>
+		<action name="getstuinfo" class="stuinfoAction"  method="getstuinfo">
+		 <result name="success">/teacherframe/updateStu.jsp</result>
+		</action>
+		<action name="queryStuinfo" class="stuinfoAction"  method="queryStuinfo">
+		 <result name="success">/teacherframe/stuinfo1.jsp</result>
+		</action>
+		
+		
+		<!-- topAction -->
+		
+		<action name="getTop" class="topAction"  method="getTop">
+		 <result name="success">/teacherframe/updateTop.jsp</result>
+		</action>
+		<action name="updateTop" class="topAction"  method="updateTop">
+		 <result name="success">/teacherframe/topicinfo.jsp</result>
+		</action>
+		<action name="deleteTop" class="topAction"  method="deleteTop">
+		 <result name="success">/teacherframe/topicinfo.jsp</result>
+		</action>
+		<action name="addTop" class="topAction"  method="addTop">
+		 <result name="success">/teacherframe/topicinfo.jsp</result>
+		</action>
+		<action name="querytop" class="topAction"  method="querytop">
+		 <result name="success">/teacherframe/topic1.jsp</result>
+		</action>
+		
+		<!-- scoreAction -->
+		<action name="browseScorePaging" class="scoreAction"  method="browseScorePaging">
+		<result name="success">/teacherframe/sco.jsp</result>
+		</action>
+		<action name="updateSore" class="scoreAction"  method="updateScore">
+		 <result name="success">/teacherframe/score.jsp</result>
+		</action>
+		<action name="deleteScore" class="scoreAction"  method="deleteScore">
+		 <result name="success">/teacherframe/score.jsp</result>
+		</action>
+		<action name="getscore" class="scoreAction"  method="getscore">
+		 <result name="success">/teacherframe/updateSco.jsp</result>
+		</action>
+		<action name="addScore" class="scoreAction"  method="addScore">
+		 <result name="success">/teacherframe/score.jsp</result>
+		</action>
+		<action name="qureyscore" class="scoreAction"  method="qureyscore">
+		 <result name="success">/teacherframe/sco1.jsp</result>
+		</action>
+		
+		
+		
+		
+		<!-- teachAction -->
+		<action name="getteach" class="teachAction"  method="getteach">
+		 <result name="success">/teacherframe/updateTeach.jsp</result>
+		</action>
+		<action name="updateTeach" class="teachAction"  method="updateTeach">
+		 <result name="success">/teacherframe/getTeach.jsp</result>
+		</action>
+		
+		<!-- choiceAction -->
+		<action name="browseChoicePaging" class="choiceAction"  method="browseChoicePaging">
+		 <result name="success">/cho.jsp</result>
+		</action>
+	
+		<!-- 上传 -->
+		<action name="upload" class="uploadAction">  
+        <result name="success">/Success.jsp</result>  
+        <result name="error">/error.jsp</result>  
+        <result name="input">/error.jsp</result>  
+        <param name="savePath">/upload</param>  
+    </action>  
+    
+    <!-- 下载 -->
+    <action name="down_*" class="downloadAction" method="{1}">  
+        <!-- 1.列表展示 -->
+        <result name="list">/up_down/download.jsp</result>
+        <!-- 2.下载操作 -->
+        <result name="download" type="stream">
+        <!-- 调用action中返回流的方法 -->
+
+        <!-- 允许下载的文件类型：此处指定为所有的二进制文件类型 
+            在tomacat的conf/web.xml中找exe对应的<mime-type>
+        -->
+            <param name="contentType">application/octet-stream</param>
+            <!-- 对应Action中的属性：就是返回流的属性【其实就是getAttrInputStream()中的attrInputStream】 -->
+            <param name="inputName">attrInputStream</param>
+            <!-- 下载头，包括：浏览器显示的文件名 
+                filename=${downFileName}这不是el表达式，
+                el表达式仅能用于jsp，这是struts在配置文件中的取值符号
+            -->
+            <param name="contentDisposition">attachment;filename=${downFileName}</param>
+            <!-- 缓冲区大小设置 -->
+            <param name="bufferSize">1024</param>
+        </result>
+    
+    </action>
+    
+    <action name="downlist" class="downloadAction" method="list">
+     <result name="list">/up_down/download.jsp</result>
+     </action>
+	</package>
+</struts>    
